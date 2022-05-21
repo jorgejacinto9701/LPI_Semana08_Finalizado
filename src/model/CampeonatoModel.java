@@ -23,8 +23,8 @@ public class CampeonatoModel {
 			conn = MySqlDBConexion.getConexion();
 			
 			//2 Se prepara el SQL
-			String sql = "insert into campeonato value(null,?,?,curtime(),1)";
-			pstm = conn.prepareStatement(sql);
+			String sql = "call sp_inserta_campeonato(?,?)";
+			pstm = conn.prepareCall(sql);
 			pstm.setString(1, obj.getNombre());
 			pstm.setInt(2, obj.getAnnio());
 			
@@ -95,8 +95,8 @@ public class CampeonatoModel {
 			conn = MySqlDBConexion.getConexion();
 			
 			//2 Se prepara el SQL
-			String sql = "delete from campeonato where idCampeonato = ?";
-			pstm = conn.prepareStatement(sql);
+			String sql = "call sp_elimina_campeonato(?)";
+			pstm = conn.prepareCall(sql);
 			pstm.setInt(1, idCampeonato);
 			
 			log.info(">>> " + pstm);
@@ -124,8 +124,8 @@ public class CampeonatoModel {
 			conn = MySqlDBConexion.getConexion();
 			
 			//2 Se prepara el SQL
-			String sql = "update campeonato set nombre=?, año=?, estado=? where idCampeonato=?";
-			pstm = conn.prepareStatement(sql);
+			String sql = "call sp_actualiza_campeonato(?,?,?,?);";
+			pstm = conn.prepareCall(sql);
 			pstm.setString(1, obj.getNombre());
 			pstm.setInt(2, obj.getAnnio());
 			pstm.setInt(3, obj.getEstado());
@@ -159,8 +159,8 @@ public class CampeonatoModel {
 			conn = MySqlDBConexion.getConexion();
 			
 			//2 Se prepara el SQL
-			String sql = "select * from campeonato";
-			psmt = conn.prepareStatement(sql);
+			String sql = "call sp_lista_campeonato()";
+			psmt = conn.prepareCall(sql);
 			
 			log.info(">>> " + psmt);
 			

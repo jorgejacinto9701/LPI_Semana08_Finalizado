@@ -24,8 +24,8 @@ public class JugadorModel {
 			conn = MySqlDBConexion.getConexion();
 
 			//2 Se prepara el SQL
-			String sql = "insert into jugador values(null,?,?,?,curtime(),1)";
-			pstm = conn.prepareStatement(sql);
+			String sql = "call sp_inserta_jugador(?,?,?)";
+			pstm = conn.prepareCall(sql);
 			pstm.setString(1, obj.getNombre());
 			pstm.setString(2, obj.getApellido());
 			pstm.setDate(3, obj.getFechaNacimiento());
@@ -51,8 +51,8 @@ public class JugadorModel {
 		PreparedStatement pstm = null;
 		try {
 			con = MySqlDBConexion.getConexion();
-			String sql = "update jugador set nombre=?, apellido=?, fechaNacimiento=?, estado =? where idjugador=?"; 
-			pstm = con.prepareStatement(sql);
+			String sql = "call sp_actualiza_jugador(?,?,?,?,?);";
+			pstm = con.prepareCall(sql);
 			pstm.setString(1, c.getNombre());
 			pstm.setString(2, c.getApellido());
 			pstm.setDate(3, c.getFechaNacimiento());
@@ -80,8 +80,8 @@ public class JugadorModel {
 
 		try {
 			con = MySqlDBConexion.getConexion();
-			String sql ="delete from jugador where idJugador=?";
-			pstm = con.prepareStatement(sql);
+			String sql = "call sp_elimina_jugador(?)";
+			pstm = con.prepareCall(sql);
 			pstm.setInt(1, idjugador);
 			log.info(">>> " + pstm);
 			eliminados = pstm.executeUpdate();
@@ -105,8 +105,8 @@ public class JugadorModel {
 		ResultSet rs = null; //Trae la data de la BD
 		try {
 			con = MySqlDBConexion.getConexion();
-			String sql ="select * from jugador";
-			pstm = con.prepareStatement(sql);
+			String sql = "call sp_lista_jugador()";
+			pstm = con.prepareCall(sql);
 			log.info(">>> " + pstm);
 			
 			//En rs se trae los datos de la BD segun el SQL
